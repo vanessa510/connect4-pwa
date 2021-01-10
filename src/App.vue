@@ -1,32 +1,58 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer 
+    v-model="drawer"
+    app>
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          v-for="item in this.navItems"
+          :key="item.title"
+          link
+          :to="item.to"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title class="font-weight-bold">C <v-img class="img" src="./assets/connect4.jpg" max-height="10" max-width="10"> </v-img> nnect 4</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <!--  -->
+       <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+  export default {
+    data: () => ({ 
+      drawer: null,
+      navItems : [
+        {title: "Lobby", icon : 'mdi-account-group', to: "/lobby"},
+        {title: "Rules", icon : 'mdi-help-circle', to: "/"}] }),
   }
-}
+</script>
+
+<style>
+  .v-toolbar__title {
+    display: flex;
+  }
+
+  .img {
+    margin-top: 11px;
+  }
 </style>
