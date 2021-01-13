@@ -1,7 +1,7 @@
 <template>
 <div class="game">
-    <buttongroup />
-    <board />
+    <buttongroup @handle-click="handle"/>
+    <board @col-clicked="play" @update-done="updated" :message="msg" />
 </div>
 </template>
 
@@ -28,7 +28,8 @@ export default {
         return {
             ID : 0,
             SOCKET : WebSocket,
-            board : Board
+            board : Board,
+            msg : "",
         }
     },
     created() {
@@ -44,8 +45,7 @@ export default {
     }
     this.SOCKET.onmessage = (e) => {
         if (typeof e.data === "string" && e.data === "done") {
-            redrawBoard(ID)
-
+            this.msg = e.data;
         }
         if (typeof e.data === "string" && e.data === "quitGame") {
             this.SOCKET.close();
@@ -55,13 +55,34 @@ export default {
     this.SOCKET.onerror = (error) => console.log(error)
     this.SOCKET.onclose = () => console.log("Websocket closed!")
     console.log(this.SOCKET)
-    this.getJSON()     
+    //this.getJSON()     
+    },
+
+    play(col){
+        console.log(col);
+        let turn = {
+        _type : "playTurn",
+        _msg : "",
+        _col : col
+    }
+    this.SOCKET.send(JSON.stringify(turn));
+    },
+
+    handle(type){
+        let event = {
+        _type :type,
+        _msg : ""
+    }
+        this.SOCKET.send(JSON.stringify(event));
     },
 
     getJSON() {
         axios.get(`http://localhost:9000/games/${this.ID}/json`).then((res) => {
-            this.board.methods.update(res.data.board)
+            this.board.json = res.data;
             })
+    }, 
+    updated() {
+        this.msg = "";
     }
 
 

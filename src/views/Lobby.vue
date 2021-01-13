@@ -3,11 +3,12 @@
   <h1>Lobby</h1>
     <div class="container">
         <div class="newGameContainer pt-6 mb-6"> 
-            <p class="ma-0">There are currently no open Games, be the first to start playing!</p><br>
+            <p class="ma-0" v-if="games.length === 0">There are currently no open Games, be the first to start playing!</p><br>
+            </div>
     <v-btn class="ml-16" color="primary" to="/newGame"> Start new Game </v-btn>
 
-        </div>
-        <p>
+        
+        <p  v-if="games.length >0">
             These are the currently active games, join one if you want!<br>
         </p>
         <v-card
@@ -35,6 +36,7 @@
     <v-card-actions>
       <v-btn
         color="primary"
+        to="game/"   
       >
         Join Game
       </v-btn>
@@ -77,4 +79,5 @@ export default {
     }
 }
 </script>
+
 

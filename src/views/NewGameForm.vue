@@ -51,7 +51,9 @@ export default {
         ws.onmessage = e => {
             ws.close()
         }
+        this.$router.push('game');
         }
+        
     }
 }
 </script>

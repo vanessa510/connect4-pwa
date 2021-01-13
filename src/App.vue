@@ -27,7 +27,7 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="font-weight-bold">C <v-img class="img" src="./assets/connect4.jpg" max-height="10" max-width="10"> </v-img> nnect 4</v-toolbar-title>
+      <v-toolbar-title class="font-weight-bold d-inline-flex">C<v-img class="img mr-0" src="./assets/connect4.jpg" max-height="10" max-width="10"> </v-img>nnect 4</v-toolbar-title>
     </v-app-bar>
 
     <v-main>
@@ -56,3 +56,4 @@
     margin-top: 11px;
   }
 </style>
+
