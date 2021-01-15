@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="app">
     <v-navigation-drawer 
     v-model="drawer"
     app>
@@ -28,6 +28,9 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="font-weight-bold d-inline-flex">C<v-img class="img mr-0" src="./assets/connect4.jpg" max-height="10" max-width="10"> </v-img>nnect 4</v-toolbar-title>
+      <v-spacer> </v-spacer>
+      <v-btn to="/login"> Sign In</v-btn>
+      <v-btn to="/register"> Sign Up </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -54,6 +57,11 @@
 
   .img {
     margin-top: 11px;
+  }
+
+  #app {
+    background-image: url("/assets/background.jpeg");
+    background-size: cover;
   }
 </style>
 
