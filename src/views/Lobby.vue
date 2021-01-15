@@ -1,8 +1,8 @@
 <template>
 <div class="lobby ma-6">
-  <h1>Lobby</h1>
     <div class="container">
-        <div class="newGameContainer pt-6 mb-6"> 
+      <h1>Lobby</h1>
+        <div class="newGameContainer"> 
             <p class="ma-0" v-if="games.length === 0">There are currently no open Games, be the first to start playing!</p><br>
             </div>
     <v-btn class="ml-16" color="primary" to="/newGame"> Start new Game </v-btn>
@@ -79,5 +79,13 @@ export default {
     }
 }
 </script>
+
+<style>
+
+h1 {
+  margin-bottom: 20px;
+}
+
+</style>
 
 

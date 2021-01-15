@@ -1,5 +1,6 @@
 <template>
-  <v-app id="app">
+  <v-app src="assets/background.jpeg">
+    <div src="assets/background.jpeg" id="app">
     <v-navigation-drawer 
     v-model="drawer"
     app>
@@ -37,6 +38,8 @@
       <!--  -->
        <router-view></router-view>
     </v-main>
+    </div>
+ 
   </v-app>
 </template>
 
@@ -50,7 +53,7 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .v-toolbar__title {
     display: flex;
   }
@@ -60,8 +63,9 @@
   }
 
   #app {
-    background-image: url("/assets/background.jpeg");
+    background-image: url("assets/background.jpeg") !important;
     background-size: cover;
+    
   }
 </style>
 
