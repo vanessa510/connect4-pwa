@@ -54,7 +54,15 @@ export default {
         this.$router.push('game');
         }
         
+    },
+    mounted() {
+
+    const cookie = document.cookie;
+    if (!cookie.startsWith("authenticator=")) {
+      this.$router.push("login");
     }
+    this.$store.dispatch("getGames");
+  },
 }
 </script>
 

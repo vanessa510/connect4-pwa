@@ -32,6 +32,15 @@ export default {
             msg : "",
         }
     },
+    mounted() {
+
+    const cookie = document.cookie;
+    if (!cookie.startsWith("authenticator=")) {
+      this.$router.push("login");
+    }
+    this.$store.dispatch("getGames");
+  },
+
     created() {
         this.load()
     },

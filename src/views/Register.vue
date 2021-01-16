@@ -32,7 +32,7 @@
         type="password"
         hide-details="auto"
       ></v-text-field>
-     <v-btn class="btn" color="primary" @click="signUp"> Sign Up <v-icon>mdi-arrow-right</v-icon></v-btn>
+     <v-btn class="btn" color="primary" @click="register"> Sign Up <v-icon>mdi-arrow-right</v-icon></v-btn>
      <p>  <a to="/login">Already a member? Sign in!</a></p>
 </v-form>
 </div>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { REGISTER } from '../store/actions/auth';
 export default {
     name: "register", 
     
@@ -62,7 +63,7 @@ export default {
             formData.append('email', this.email);
             formData.append('password', this.password);
             formData.append('rememberMe', true);
-            this.$store.dispatch("register", formData);
+            this.$store.dispatch(REGISTER, formData);
         }
     }
 
