@@ -1,3 +1,5 @@
+ 
+
 <template>
 <div class="container pa-6">
 <v-form>
@@ -28,6 +30,7 @@
 </template>
 
 <script>
+import { AUTH_REQUEST } from "../store/actions/auth.js";
 export default {
     name: "login",
     data() {
@@ -45,7 +48,7 @@ export default {
             formData.append('email', this.email);
             formData.append('password', this.password);
             formData.append('rememberMe', true);
-            this.$store.dispatch("login", formData);
+            this.$store.dispatch(AUTH_REQUEST, formData);
         },
         googleLogIn() {
             this.$store.dispatch("googleLogIn");
