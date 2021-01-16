@@ -66,7 +66,13 @@ export default {
             ws.onopen = e => {
                 ws.send(JSON.stringify({_type : "getGames"}))
             };
+            ws.onerror = e => {
+              console.log(e)
+              this.$router.push("login")
+              
+            }
             ws.onmessage = e => {
+                
                 let msg = JSON.parse(e.data)
                 if(msg.games){
                     this.games = JSON.parse(e.data).games
