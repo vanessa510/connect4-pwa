@@ -57,43 +57,51 @@ export default {
 
     },
     created: function () {
-       //this.getGames();
+       this.getGames();
        //axios.get("http://localhost:9000/games/0/json").then(res => console.log(res)).catch(err => console.log(err));
     },
     methods : {
       mounted() {
     
   },
-        /*getGames() {
-            //let ws = new WebSocket("ws://localhost:9000/games/websocket")
-            this.$store.websocket.onopen = e => {
+        getGames() {
+            let ws = new WebSocket("ws://localhost:9000/games/websocket")
+            ws.onopen = e => {
+              ws.send(JSON.stringify({_type : "getGames"}))
+            }
+            
+            /*this.$store.websocket.onopen = e => {
                 ws.send(JSON.stringify({_type : "getGames"}))
-            };
+            };*/
             ws.onerror = e => {
               console.log(e)
               //this.$router.push("login")
               
             }
             ws.onmessage = e => {
-                
                 let msg = JSON.parse(e.data)
-                if(msg.games){
+                if(msg.games) {
                     this.games = JSON.parse(e.data).games
                     ws.close()
                 }
                 
             }
             
-        }*/
+        }
     },
-    mounted() {
-
+   mounted() {
     const cookie = document.cookie;
     if (!cookie.startsWith("authenticator=")) {
       this.$router.push("login");
+    } else {
+      //let json = this.$store.dispatch("getGames")
+      //console.log("json", json)
+      
+     
+      
+  
     }
-    this.$store.dispatch("getGames");
-  },
+  }
 }
 </script>
 

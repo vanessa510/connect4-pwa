@@ -9,6 +9,7 @@ import {
   REGISTER
 } from "../actions/auth";
 
+
 const websocket = new WebSocket("ws://localhost:9000/games/websocket");
 
 
@@ -25,7 +26,9 @@ const axiosConfig = {
 const state = {
   token: localStorage.getItem("user-token") || "",
   status: "",
-  cookie: document.cookie
+  cookie: document.cookie,
+  loggedIn: false,
+  games: []
 
 };
 
@@ -46,6 +49,7 @@ const actions = {
           commit('SET_COOKIE', document.cookie)
           localStorage.setItem("user-token", resp.token);
           commit(AUTH_SUCCESS, resp);
+          commit('SET_LOGEDIN', true)
           router.push("lobby")
         })
         .catch(err => {
@@ -59,6 +63,7 @@ const actions = {
     return new Promise(resolve => {
       commit(AUTH_LOGOUT);
       commit('SET_COOKIE', document.cookie)
+      commit('SET_LOGEDIN', false)
       localStorage.removeItem("user-token");
       resolve();
     });
@@ -77,16 +82,6 @@ const actions = {
       
     });
   },
-  login({ commit }, user) {
-    websocket.send(JSON.stringify({_type : "getGames"}))
-      .then(() => {
-        
-        router.push("/");
-      })
-      .catch(function (response) {
-        console.log("Something went wrong");
-      });
-  },
   logout({ commit }) {
     axios.get("http://" + "localhost:9000" + "/signOut", axiosConfig)
       .then(() => {
@@ -96,7 +91,8 @@ const actions = {
       .catch(() => {
         console.log("Something went wrong");
       })
-  },
+  }
+
 };
 
 const mutations = {
@@ -116,8 +112,22 @@ const mutations = {
   },
   SET_COOKIE(state, cookie) {
     state.cookie = cookie
+  },
+  SET_LOGEDIN (state, loggedIn) {
+    state.isLoggedIn = loggedIn
+  },
+  SET_GAMES(state, games, msg) {
+    
+    //state.games = JSON.parse()
+    //console.log("test", JSON.parse(msg).games)
   }
 };
+
+getters: {
+  loggedIn: state => {
+    return state.isLoggedIn
+  }
+}
 
 websocket.onopen = () => {
   console.log("Connected to Websocket");
@@ -127,14 +137,19 @@ websocket.onerror = () => {
   //router.push("login")
 }
 
-websocket.onmessage = e => {
+
+
+/*websocket.onmessage = e => {
   let msg = JSON.parse(e.data)
-  console.log(msg)
-  if(msg.games){
-    this.games = JSON.parse(e.data).games
+  
+  if(msg.games) {
+    console.log(msg.games[0])
+    return msg.games
+    //state.games = JSON.parse(e.data).games
+    //mutations.SET_GAMES(state.games, msg.games, msg)
 }
 
-}
+}*/
 
 export default {
   state,
