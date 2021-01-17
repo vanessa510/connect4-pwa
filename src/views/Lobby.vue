@@ -61,9 +61,7 @@ export default {
        //axios.get("http://localhost:9000/games/0/json").then(res => console.log(res)).catch(err => console.log(err));
     },
     methods : {
-      mounted() {
-    
-  },
+     
         getGames() {
             let ws = new WebSocket("ws://localhost:9000/games/websocket")
             ws.onopen = e => {
