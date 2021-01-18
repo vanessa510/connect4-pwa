@@ -63,7 +63,10 @@ export default {
     methods : {
      
         getGames() {
-            let ws = new WebSocket("ws://localhost:9000/games/websocket")
+          const LOCAL = false;
+          const SERVER = "wt-connect4.herokuapp.com";
+          const SERVER_URL = `https://${LOCAL ? "localhost:9000" : SERVER}`;
+            let ws = new WebSocket(`wss://${LOCAL ? 'localhost:9000' : SERVER}/games/websocket`)
             ws.onopen = e => {
               ws.send(JSON.stringify({_type : "getGames"}))
             }

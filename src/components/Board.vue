@@ -88,7 +88,7 @@ export default {
   components: { Cell },
     name : 'Board',
     props : {
-        message: String
+        message: String,
     },
     watch : {
        'message' : function() {
@@ -155,7 +155,14 @@ export default {
         },
         update(){
             let that = this;
-             axios.get(`http://localhost:9000/games/0/json`).then((res) => {
+            const LOCAL = false;
+            const SERVER = "wt-connect4.herokuapp.com";
+            const SERVER_URL = `https://${LOCAL ? "localhost:9000" : SERVER}`;
+             axios.get(`${SERVER_URL}/games/0/json`).then((res) => {
+                 console.log(res.data.players[res.data.currentPlayerIndex].name);
+            if(res.data.state === "PlayerWinState"){
+                this.$emit('player-won',res.data.players[res.data.currentPlayerIndex].name )
+            }
             this.json = res.data;
             this.rows = res.data.board.row
             this.cols = res.data.board.col

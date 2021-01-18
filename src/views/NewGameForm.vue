@@ -44,7 +44,10 @@ export default {
 
     methods : {
         createGame() {
-        let ws = new WebSocket("ws://localhost:9000/games/websocket")
+            const LOCAL = false;
+          const SERVER = "wt-connect4.herokuapp.com";
+          const SERVER_URL = `https://${LOCAL ? "localhost:9000" : SERVER}`;
+            let ws = new WebSocket(`wss://${LOCAL ? 'localhost:9000' : SERVER}/games/websocket`);
         ws.onopen = e => {
             ws.send(JSON.stringify({_type : "createGame", player1 : this.player1, player2 : this.player2}))
         };
@@ -61,7 +64,6 @@ export default {
     if (!cookie.startsWith("authenticator=")) {
       this.$router.push("login");
     }
-    this.$store.dispatch("getGames");
   },
 }
 </script>

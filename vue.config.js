@@ -1,5 +1,5 @@
 module.exports = {
-  "transpileDependencies": [
-    "vuetify"
-  ]
-}
+  publicPath: "/frontend",
+  devServer: { https: true },
+  transpileDependencies: ["vuetify"],
+};

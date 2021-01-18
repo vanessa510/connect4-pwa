@@ -1,7 +1,8 @@
 <template>
 <div class="game">
     <buttongroup @handle-click="handle"/>
-    <board @col-clicked="play" @update-done="updated" :message="msg" />
+    <board  v-if="playerWon === 'none'" @col-clicked="play" @update-done="updated" :message="msg" @player-won="winstate" />
+    <div v-if="playerWon !== 'none'">Congrats you have won: {{playerWon}}</div>
 </div>
 </template>
 
@@ -26,10 +27,14 @@ export default {
     },
     data() {
         return {
+            LOCAL : false,
+            SERVER : "wt-connect4.herokuapp.com",
+            SERVER_URL : `http://${LOCAL ? "localhost:9000" : SERVER}`,
             ID : 0,
             SOCKET : WebSocket,
             board : Board,
             msg : "",
+            playerWon: "none",
         }
     },
     mounted() {
@@ -38,21 +43,23 @@ export default {
     if (!cookie.startsWith("authenticator=")) {
       this.$router.push("login");
     }
-    this.$store.dispatch("getGames");
   },
 
     created() {
         this.load()
+        console.log(this.playerWon)
     },
      methods : {
         load() {
+            
     console.log(this.ID);
-    this.SOCKET = new WebSocket(`ws://localhost:9000/games/${this.ID}/websocket`);
+    this.SOCKET = new WebSocket(`wss://${this.LOCAL ? 'localhost:9000' : this.SERVER}/games/${this.ID}/websocket`);
     
     this.SOCKET.onopen = () => {
         //SOCKET.send("Hey SERVER. IM HERE")
     }
     this.SOCKET.onmessage = (e) => {
+        console.log(e);
         if (typeof e.data === "string" && e.data === "done") {
             this.msg = e.data;
         }
@@ -86,12 +93,17 @@ export default {
     },
 
     getJSON() {
-        axios.get(`http://localhost:9000/games/${this.ID}/json`).then((res) => {
+        axios.get(`http://${this.SERVER_URL}/games/${this.ID}/json`).then((res) => {
             this.board.json = res.data;
             })
     }, 
     updated() {
         this.msg = "";
+    },
+
+    winstate(player){
+        console.log(`Player won: ${player}`)
+        this.playerWon = player;
     }
 
 
