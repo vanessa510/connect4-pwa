@@ -24,6 +24,7 @@
           <p>  <a to="/register">Not a member? Sign up now!</a></p>
          <p> Or sign in with one of your following accounts:</p>
          <v-btn color="red" @click=googleLogIn> <v-icon color="white">mdi-google</v-icon> </v-btn>
+         <o-auth-button title="Google" :redirect-to="redirectTo" provider="google" icon="google-plus-square"></o-auth-button>
         
 </v-form>
 </div>
@@ -31,8 +32,10 @@
 
 <script>
 import { AUTH_REQUEST } from "../store/actions/auth.js";
+import OAuthButton from "../components/OAuthButton";
 export default {
     name: "login",
+    components : {OAuthButton},
     data() {
         return {
             email: '',

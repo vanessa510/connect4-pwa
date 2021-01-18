@@ -29,7 +29,7 @@ export default {
         return {
             LOCAL : false,
             SERVER : "wt-connect4.herokuapp.com",
-            SERVER_URL : `http://${this.LOCAL ? "localhost:9000" : this.SERVER}`,
+            SERVER_URL : `http://${LOCAL ? "localhost:9000" : SERVER}`,
             ID : 0,
             SOCKET : WebSocket,
             board : Board,

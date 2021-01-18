@@ -2,10 +2,19 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Rules from "../views/Rules.vue";
 import Lobby from "../views/Lobby.vue";
+import OAuth from "../components/OAuth";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/oauth/:provider",
+    name: "oauth",
+    component: OAuth,
+    props: (route) => ({
+      provider: route.params.provider,
+    }),
+  },
   {
     path: "/lobby",
     name: "Lobby",

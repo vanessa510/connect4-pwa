@@ -99,16 +99,33 @@ const actions = {
       });
   },
   googleLogIn({ commit }) {
-    axios.get(
-      `https://accounts.google.com/o/oauth2/v2/auth?client_id=456507613062-8o95kesvmbc22okoj0sa2o52015bfq20.apps.googleusercontent.com&redirect_uri=https://wt-connect4.herokuapp.com/frontend/lobby&response_type=token&scope=https://www.googleapis.com/auth/contacts`,
-      $.extend(axiosConfig, {
-        headers: {
-          "X-Requested-With": "XMLHttpRequest",
-          "Content-Header": "Access-Control-Allow-Origin",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-    );
+    window.location.href =
+      "https://wt-connect4.herokuapp.com/authenticate/google";
+
+    /* const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const url = SERVER + "/authenticate/google";
+    $.ajax({
+      url: proxyurl + url,
+      type: "GET",
+      headers: {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "https://wt-connect4.herokuapp.com/",
+        "Content-Type": "application/x-www-form-urlencoded",
+        Mode: "no-cors",
+      },
+      xhrFields: {
+        withCredentials: true,
+      },
+      success: function(result) {
+        console.log(JSON.stringify(result));
+      },
+    });
+  },
+
+  /*
+    window.opener()
+    window.location =
+      "https://accounts.google.com/o/oauth2/v2/auth?client_id=456507613062-8o95kesvmbc22okoj0sa2o52015bfq20.apps.googleusercontent.com&redirect_uri=https://wt-connect4.herokuapp.com/frontend/&response_type=code&scope=https://www.googleapis.com/auth/contacts";
     axios
       .get(
         `${SERVER_URL}/authenticate/google`,
@@ -131,6 +148,7 @@ const actions = {
         console.log(response);
         console.log("Something went wrong");
       });
+  },*/
   },
 };
 

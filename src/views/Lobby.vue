@@ -92,7 +92,8 @@ export default {
     },
    mounted() {
     const cookie = document.cookie;
-    if (!cookie.startsWith("authenticator=")) {
+    
+    if (!(cookie.startsWith("authenticator=") || cookie.startsWith("OAuth2State"))) {
       this.$router.push("login");
     } else {
       //let json = this.$store.dispatch("getGames")
